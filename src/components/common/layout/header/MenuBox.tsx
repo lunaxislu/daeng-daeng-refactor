@@ -17,6 +17,7 @@ const MenuBox = () => {
     map: ['병원&약국 찾기', '/map'],
     calendar: ['일정 등록하기', '/calendar'],
     gallery: ['갤러리', '/gallery'],
+    galleryCompare: ['갤러리 비교', '/galleryRefactor'],
   };
 
   const clickRouteHandler = (path: string) => {

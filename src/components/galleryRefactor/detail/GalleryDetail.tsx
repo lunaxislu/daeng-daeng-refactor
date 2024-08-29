@@ -57,7 +57,13 @@ const GalleryDetail = () => {
           {specificData?.images?.map((image, index) => (
             <CarouselItem key={`${nanoid()} `}>
               <div className="w-[84.6rem] h-[56rem] flex justify-center items-center rounded-3xl">
-                <Image src={image.image} alt={`Slide ${index + 1}`} objectFit="cover" width={846} height={560} />
+                <Image
+                  src={image.image}
+                  alt={`Slide ${index + 1}`}
+                  style={{ objectFit: 'cover' }}
+                  width={846}
+                  height={560}
+                />
               </div>
             </CarouselItem>
           ))}

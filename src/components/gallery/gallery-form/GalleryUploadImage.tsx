@@ -91,7 +91,13 @@ const GalleryUploadImage = <T extends FieldValues>({
         {previewImages.map((url, index) => (
           <div key={index} className="relative">
             <div className="w-[19.3rem] h-[12.8rem] rounded-[0.6rem] overflow-hidden border-2 border-[#C5C9CF]">
-              <Image src={url} alt={`Preview ${index}`} layout="fill" objectFit="cover" />
+              <Image
+                src={url}
+                alt={`Preview ${index}`}
+                style={{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%' }}
+                width={500}
+                height={100}
+              />
             </div>
             <button
               onClick={() => handleImageDelete(index)}

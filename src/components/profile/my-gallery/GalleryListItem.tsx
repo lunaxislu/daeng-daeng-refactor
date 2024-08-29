@@ -25,9 +25,9 @@ const GalleryListItem = ({ thumbnail, galleryId }: { thumbnail: string | null; g
         <Image
           src={`${thumbnail}`}
           alt="게시물 썸네일 이미지"
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center"
+          style={{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%' }}
+          width={500}
+          height={100}
         />
       ) : (
         <NonImage />

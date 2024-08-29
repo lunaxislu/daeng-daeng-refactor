@@ -25,9 +25,9 @@ const GalleryItem = ({ gallery }: I_GalleryItemProps) => {
           <Image
             src={mainImage ? mainImage : ''}
             alt={gallery.title}
-            layout="fill"
-            objectFit="cover"
-            objectPosition="center"
+            style={{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%' }}
+            width={500}
+            height={100}
           />
         </span>
       )}

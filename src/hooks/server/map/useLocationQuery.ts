@@ -29,21 +29,7 @@ const useLocationQuery = (props: I_QueryProps) => {
       console.time('useQuery+promise.all');
     }
   }, [api_query, api_type]);
-  const {
-    data: medicine,
-    isLoading,
-    isSuccess,
-  } = useQuery({
-    queryKey: [LOCATION_QUERY.HOSPITAL, api_query],
-    queryFn: () => ParalledQueriesAnimalMedicineAPI(api_query),
-    enabled: !!api_query && api_type === 'hospital',
-    select: data => {
-      const result = refineSeoulApiData(data);
-      return result;
-    },
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-  });
+
   const queries = DYNAMIC_API_QURIES.map(({ api_name, query_key }) => ({
     queryKey: ['ORIGIN', api_query, api_name],
     queryFn: async () => {
@@ -62,7 +48,21 @@ const useLocationQuery = (props: I_QueryProps) => {
   const results = useQueries({
     queries,
   });
-
+  const {
+    data: medicine,
+    isLoading,
+    isSuccess,
+  } = useQuery({
+    queryKey: [LOCATION_QUERY.HOSPITAL, api_query],
+    queryFn: () => ParalledQueriesAnimalMedicineAPI(api_query),
+    enabled: !!api_query && api_type === 'hospital',
+    select: data => {
+      const result = refineSeoulApiData(data);
+      return result;
+    },
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+  });
   // 모든 쿼리가 성공했는지 확인하고 성능을 측정하는 useEffect
   useEffect(() => {
     // `enabled`가 true인 경우에만 성능 측정 진행

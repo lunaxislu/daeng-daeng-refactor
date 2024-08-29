@@ -85,6 +85,7 @@ export const ParalledQueriesAnimalMedicineAPI = async (api_query: string | null)
         return result.data;
       }),
     );
+
     return results;
   } catch (err) {
     console.log(err, 'map Error');

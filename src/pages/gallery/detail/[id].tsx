@@ -1,6 +1,7 @@
 import GalleryDetail from '@/components/gallery/GalleryDetail';
-import { handleDetailApiRouter } from '@/components/galleryRefactor/api/handler';
+import { fetchGalleryDetail, handleDetailApiRouter } from '@/components/galleryRefactor/api/handler';
 import useFetchGalleryDetail from '@/hooks/server/galleryRefactor/detail-hook/useFetchGalleryDetail';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { NextPageContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -35,5 +36,14 @@ export default GalleryDetailPage;
 export const getServerSideProps = async (context: NextPageContext) => {
   const { query } = context;
   const { id } = query;
-  return { props: { id } };
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: ['galleryDetail', id],
+    queryFn: () => fetchGalleryDetail(id as string),
+  });
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
 };

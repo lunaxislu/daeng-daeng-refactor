@@ -1,4 +1,4 @@
-import { withCSR } from '@/api/withCsr';
+import { withConditionalSSR } from '@/api/withCsr';
 import { fetchGalleryDetail, fetchInfinityGalleries } from '@/components/galleryRefactor/api/handler';
 import { Post, PostQueryKey } from '@/types/galleryRefactor/galleryRefactor';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
@@ -17,7 +17,7 @@ const GalleryRefactorPage = () => {
 
 export default GalleryRefactorPage;
 
-export const getServerSideProps = withCSR(async (ctx: GetServerSidePropsContext) => {
+export const getServerSideProps = withConditionalSSR(async (ctx: GetServerSidePropsContext) => {
   const queryKey = ctx.query.postId;
   const queryClient = new QueryClient();
 

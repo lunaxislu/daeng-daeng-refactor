@@ -1,5 +1,6 @@
 import { Post } from '@/types/galleryRefactor/galleryRefactor';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import { useMemo } from 'react';
 
 interface IProps {
   queryKey: string[];
@@ -10,7 +11,7 @@ interface IQueryData {
   pages: Post[][];
 }
 const useFetchInfinityGalleries = (props: IProps) => {
-  const client = useQueryClient();
+  const client = useMemo(() => useQueryClient(), []);
   const { data, isLoading, isError, error, hasNextPage, fetchNextPage, isFetchingNextPage, refetch } = useInfiniteQuery(
     {
       queryKey: props.queryKey,
@@ -20,12 +21,17 @@ const useFetchInfinityGalleries = (props: IProps) => {
         return lastPage.length > 0 ? allPages.length + 1 : undefined;
       },
       select: (data: IQueryData) => {
-        console.log('🚀 ~ useFetchInfinityGalleries ~ data:', data);
         const res = data.pages.map(pageData => pageData).flat();
 
         res.forEach(data => {
           const queryKey = [...props.queryKey, `${data.id}`];
           client.setQueryData(queryKey, data);
+          //client.fetchQuery({
+          //queryKey,
+          //queryFn: () => data,
+          //staleTime:...
+          // gcTime:...
+          // });
         });
 
         return res;

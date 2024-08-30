@@ -24,11 +24,11 @@ const GalleryListItem = ({ posts }: IPostProps) => {
         >
           <span className="w-[30.2rem] h-[20rem] object-cover mb-6 relative">
             <Image
-              layout="fill"
               src={post.thumbnail ?? ''}
               alt={post.title}
-              objectFit="cover"
-              objectPosition="center"
+              style={{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%' }}
+              width={500}
+              height={100}
             />
           </span>
           <h3 className="text-xl font-bold mb-2">{post?.title}</h3>

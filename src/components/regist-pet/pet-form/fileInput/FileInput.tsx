@@ -38,7 +38,11 @@ const FileInput = <
         <FormLabel className={`w-64 h-64 block cursor-pointer${labelCn}`}>
           {profileImage ? (
             <div className={`relative w-64 h-64 rounded-full overflow-hidden cursor-pointer`}>
-              <Image src={`${profileImage}`} alt="수정이미지" layout="fill" objectFit="cover" objectPosition="center" />
+              <Image
+                src={`${profileImage}`}
+                alt="수정이미지"
+                style={{ objectFit: 'cover', objectPosition: 'center' }}
+              />
             </div>
           ) : (
             <NonImage className="h-64 rounded-full cursor-pointer" />

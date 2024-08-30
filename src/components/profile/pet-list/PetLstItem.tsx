@@ -56,9 +56,7 @@ const PetLstItem = ({ petInfo }: { petInfo: I_PetType }) => {
             <Image
               src={`${profileImage}`}
               alt="펫프로필 이미지"
-              layout="fill"
-              objectFit="cover"
-              objectPosition="center"
+              style={{ objectFit: 'cover', objectPosition: 'center' }}
             />
           ) : (
             <Avatar width={'100%'} height={'100%'} />

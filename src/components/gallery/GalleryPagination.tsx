@@ -34,11 +34,11 @@ const GalleryPagination = ({ id }: { id: string }) => {
               >
                 <span className=" w-[100%] h-[10rem] object-cover mb-6 relative">
                   <Image
-                    layout="fill"
                     src={query.data.thumbnail ?? ''}
                     alt={query.data.title}
-                    objectFit="cover"
-                    objectPosition="center"
+                    style={{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%' }}
+                    width={500}
+                    height={100}
                   />
                 </span>
                 <h3 className="text-xl font-bold mb-2">{query.data?.title}</h3>

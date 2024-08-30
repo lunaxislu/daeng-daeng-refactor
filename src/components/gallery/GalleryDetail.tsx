@@ -34,7 +34,13 @@ const GalleryDetail = ({ gallery, isLoading }: { gallery?: Post; isLoading: bool
           {gallery?.images?.map((image, index) => (
             <CarouselItem key={uniqueId()}>
               <div className="w-[84.6rem] h-[56rem] flex justify-center items-center rounded-3xl">
-                <Image src={image.image} alt={`Slide ${index + 1}`} objectFit="cover" width={846} height={560} />
+                <Image
+                  src={image.image}
+                  alt={`Slide ${index + 1}`}
+                  width={846}
+                  height={560}
+                  style={{ objectFit: 'cover' }}
+                />
               </div>
             </CarouselItem>
           ))}

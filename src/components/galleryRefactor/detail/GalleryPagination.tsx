@@ -41,11 +41,16 @@ const GalleryPagination = (props: PostDetailPaginationProps) => {
               >
                 <span className=" w-[100%] h-[10rem] object-cover mb-6 relative">
                   <Image
-                    layout="fill"
+                    width={100}
+                    height={100}
                     src={query.data.thumbnail ?? ''}
                     alt={query.data.title}
-                    objectFit="cover"
-                    objectPosition="center"
+                    style={{
+                      objectFit: 'cover',
+                      objectPosition: 'center',
+                      width: '100%',
+                      height: '100%',
+                    }}
                   />
                 </span>
                 <h3 className="text-xl font-bold mb-2">{query.data?.title}</h3>

@@ -16,7 +16,7 @@ const JumbotronImage = () => {
     <div className={cn(`absolute left-[50%] top-0 translate-x-[-50%] w-full h-full max-w-[128rem]`)}>
       <div className={cn('mx-auto h-full overflow-hidden rounded-[15rem]', px1680, px920, px520)}>
         <p className={cn('relative w-full h-full overflow-hidden')}>
-          <Image src={JumbotronPNG} alt="점보트론 이미지" layout="fill" objectFit="cover" objectPosition="center" />
+          <Image src={JumbotronPNG} alt="점보트론 이미지" style={{ objectFit: 'cover', objectPosition: 'center' }} />
         </p>
       </div>
     </div>

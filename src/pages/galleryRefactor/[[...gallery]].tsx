@@ -38,7 +38,6 @@ export const getServerSideProps = withConditionalSSR(async (ctx: GetServerSidePr
         queryKey: [PostQueryKey.posts],
         initialPageParam: 1,
         queryFn: ({ pageParam }) => fetchInfinityGalleries({ pageParam }),
-        staleTime: 60 * 1000,
       });
     } catch (err) {
       return {
@@ -50,6 +49,7 @@ export const getServerSideProps = withConditionalSSR(async (ctx: GetServerSidePr
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
+      // SEO하기 위한 동적 데이터 넣으면 굿
     },
   };
 });

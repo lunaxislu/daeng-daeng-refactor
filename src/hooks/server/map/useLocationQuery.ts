@@ -25,8 +25,8 @@ const useLocationQuery = (props: I_QueryProps) => {
   const { api_type, api_query } = props;
   useEffect(() => {
     if (!!api_query && api_type === 'hospital') {
-      console.time('useQueries Performance');
-      console.time('useQuery+promise.all');
+      console.time(`${api_query} useQueries Performance`);
+      console.time(`${api_query} useQuery+promise.all`);
     }
   }, [api_query, api_type]);
 
@@ -68,7 +68,7 @@ const useLocationQuery = (props: I_QueryProps) => {
     // `enabled`가 true인 경우에만 성능 측정 진행
     if (!!api_query && api_type === 'hospital') {
       if (isSuccess) {
-        console.timeEnd('useQuery+promise.all');
+        console.timeEnd(`${api_query} useQuery+promise.all`);
       }
       const allSuccess = results.every(result => result.status === 'success');
 
@@ -81,7 +81,7 @@ const useLocationQuery = (props: I_QueryProps) => {
         // console.log('Refined Results:', refinedResults);
 
         // 성능 측정 종료
-        console.timeEnd('useQueries Performance');
+        console.timeEnd(`${api_query} useQueries Performance`);
         // 여기서 데이터를 처리할 수 있습니다.
       }
     }

@@ -21,14 +21,9 @@ const DYNAMIC_API_QURIES = [
 // api_query에 따라서 각 지역구를 호출
 // api_query가 null이면 호출 하지 않기
 // kakao 내장 검색으로 위치 찾으면 호출 하지 않기
+
 const useLocationQuery = (props: I_QueryProps) => {
   const { api_type, api_query } = props;
-  useEffect(() => {
-    if (!!api_query && api_type === 'hospital') {
-      console.time(`${api_query} useQueries Performance`);
-      console.time(`${api_query} useQuery+promise.all`);
-    }
-  }, [api_query, api_type]);
 
   const queries = DYNAMIC_API_QURIES.map(({ api_name, query_key }) => ({
     queryKey: ['ORIGIN', api_query, api_name],
@@ -40,32 +35,43 @@ const useLocationQuery = (props: I_QueryProps) => {
       });
       return response.data; // 데이터를 반환
     },
-
     enabled: !!api_query && api_type === 'hospital',
     refetchOnWindowFocus: false,
     staleTime: Infinity,
   }));
+
   const results = useQueries({
     queries,
   });
+
+  // useQuery+Promise.all
   const {
     data: medicine,
     isLoading,
     isSuccess,
   } = useQuery({
     queryKey: [LOCATION_QUERY.HOSPITAL, api_query],
-    queryFn: () => ParalledQueriesAnimalMedicineAPI(api_query),
+    queryFn: () => {
+      return ParalledQueriesAnimalMedicineAPI(api_query);
+    },
     enabled: !!api_query && api_type === 'hospital',
     select: data => {
       const result = refineSeoulApiData(data);
+
       return result;
     },
     refetchOnWindowFocus: false,
     staleTime: Infinity,
   });
-  // 모든 쿼리가 성공했는지 확인하고 성능을 측정하는 useEffect
+
   useEffect(() => {
-    // `enabled`가 true인 경우에만 성능 측정 진행
+    if (!!api_query && api_type === 'hospital') {
+      console.time(`${api_query} useQueries Performance`);
+      console.time(`${api_query} useQuery+promise.all`);
+    }
+  }, [api_query, api_type]);
+
+  useEffect(() => {
     if (!!api_query && api_type === 'hospital') {
       if (isSuccess) {
         console.timeEnd(`${api_query} useQuery+promise.all`);
@@ -74,19 +80,15 @@ const useLocationQuery = (props: I_QueryProps) => {
 
       if (allSuccess) {
         const refinedResults = results.map(result => result.data);
-
         const allResults = refineSeoulApiData(refinedResults);
 
-        // 가공된 데이터 로그로 출력 (필요에 따라 제거 가능)
-        // console.log('Refined Results:', refinedResults);
-
-        // 성능 측정 종료
         console.timeEnd(`${api_query} useQueries Performance`);
+
         // 여기서 데이터를 처리할 수 있습니다.
+        // 예: setProcessedData(allResults);
       }
     }
   }, [results, api_query, api_type, isSuccess]);
-
   return {
     medicine,
     isGetRequestApiData: isLoading,

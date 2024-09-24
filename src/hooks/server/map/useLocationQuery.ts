@@ -3,7 +3,6 @@ import { refineSeoulApiData } from '@/components/map/utility/map-utils';
 import {} from '@/lib/utils';
 import { useQueries, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useEffect } from 'react';
 interface I_QueryProps {
   api_type: 'hospital' | 'walk';
   api_query: string | null;
@@ -24,21 +23,22 @@ const DYNAMIC_API_QURIES = [
 
 const useLocationQuery = (props: I_QueryProps) => {
   const { api_type, api_query } = props;
-
-  const queries = DYNAMIC_API_QURIES.map(({ api_name, query_key }) => ({
-    queryKey: ['ORIGIN', api_query, api_name],
-    queryFn: async () => {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_SEOUL_API_URL}`, {
-        api_query,
-        api_name,
-        query_key,
-      });
-      return response.data; // 데이터를 반환
-    },
-    enabled: !!api_query && api_type === 'hospital',
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-  }));
+  const queries = DYNAMIC_API_QURIES.map(({ api_name, query_key }) => {
+    return {
+      queryKey: ['ORIGIN', api_query, api_name],
+      queryFn: async () => {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_SEOUL_API_URL}`, {
+          api_query,
+          api_name,
+          query_key,
+        });
+        return response.data; // 데이터를 반환
+      },
+      enabled: !!api_query && api_type === 'hospital',
+      refetchOnWindowFocus: false,
+      staleTime: Infinity,
+    };
+  });
 
   const results = useQueries({
     queries,
@@ -57,38 +57,30 @@ const useLocationQuery = (props: I_QueryProps) => {
     enabled: !!api_query && api_type === 'hospital',
     select: data => {
       const result = refineSeoulApiData(data);
-
       return result;
     },
     refetchOnWindowFocus: false,
     staleTime: Infinity,
   });
 
-  useEffect(() => {
-    if (!!api_query && api_type === 'hospital') {
-      console.time(`${api_query} useQueries Performance`);
-      console.time(`${api_query} useQuery+promise.all`);
-    }
-  }, [api_query, api_type]);
+  // useEffect(() => {
+  //   if (!!api_query && api_type === 'hospital') {
+  //     if (isSuccess) {
+  //       console.timeEnd(`${api_query} useQuery+promise.all`);
+  //     }
+  //     const allSuccess = results.every(result => result.status === 'success');
 
-  useEffect(() => {
-    if (!!api_query && api_type === 'hospital') {
-      if (isSuccess) {
-        console.timeEnd(`${api_query} useQuery+promise.all`);
-      }
-      const allSuccess = results.every(result => result.status === 'success');
+  //     if (allSuccess) {
+  //       const refinedResults = results.map(result => result.data);
+  //       const allResults = refineSeoulApiData(refinedResults);
 
-      if (allSuccess) {
-        const refinedResults = results.map(result => result.data);
-        const allResults = refineSeoulApiData(refinedResults);
+  //       console.timeEnd(`${api_query} useQueries Performance`);
 
-        console.timeEnd(`${api_query} useQueries Performance`);
-
-        // 여기서 데이터를 처리할 수 있습니다.
-        // 예: setProcessedData(allResults);
-      }
-    }
-  }, [results, api_query, api_type, isSuccess]);
+  //       // 여기서 데이터를 처리할 수 있습니다.
+  //       // 예: setProcessedData(allResults);
+  //     }
+  //   }
+  // }, [results, api_query, api_type, isSuccess]);
   return {
     medicine,
     isGetRequestApiData: isLoading,

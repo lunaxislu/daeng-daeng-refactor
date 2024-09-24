@@ -82,6 +82,7 @@ export const ParalledQueriesAnimalMedicineAPI = async (api_query: string | null)
           api_name: query.api_name,
           query_key: query.query_key,
         });
+
         return result.data;
       }),
     );

@@ -1,6 +1,6 @@
 import { withConditionalSSR } from '@/api/withCsr';
+import GalleryDetail from '@/components/galleryDynamicNone/detail/GalleryDetail';
 import { fetchGalleryDetail, fetchInfinityGalleries } from '@/components/galleryRefactor/api/handler';
-import GalleryDetail from '@/components/galleryRefactor/detail/GalleryDetail';
 import GalleryList from '@/components/galleryRefactor/main/GalleryList';
 import { Post, PostQueryKey } from '@/types/galleryRefactor/galleryRefactor';
 import { dehydrate, QueryClient } from '@tanstack/react-query';

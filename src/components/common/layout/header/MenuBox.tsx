@@ -18,7 +18,7 @@ const MenuBox = () => {
     calendar: ['일정 등록하기', '/calendar'],
     gallery: ['갤러리', '/gallery'],
     galleryCompare: ['갤러리 비교', '/galleryRefactor'],
-    galleryDynamicNone: ['갤러리 다이나믹 X', '/galleryDynamicNone'],
+    // galleryDynamicNone: ['갤러리 다이나믹 X', '/galleryDynamicNone'],
   };
 
   const clickRouteHandler = (path: string) => {
